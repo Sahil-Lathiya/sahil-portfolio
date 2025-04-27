@@ -1,38 +1,116 @@
+/* App.css */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f7fa; /* very light, soft background */
+  color: #222222; /* dark text for contrast */
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.projects {
+  color: #222222;
+  padding: 20px 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.project-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-bottom: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.project-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.project-date {
+  font-size: 0.9rem;
+  color: #555555;
+  font-style: italic;
+}
+
+.section-title {
+  color: #007acc; /* bright blue heading */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0px 0px 12px rgba(0, 122, 204, 0.3);
+  transition: transform 0.3s;
+  color: #222222;
+  text-align: left;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Skills card with new background color */
+.skills-card {
+  background-color: #e0f0ff; /* very light blue */
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0px 0px 15px rgba(0, 122, 204, 0.5);
+  transition: transform 0.3s;
+  color: #222222;
+}
+
+.skills-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Skills list spacing */
+.skills-card ul {
+  padding-left: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.skills-card ul li {
+  margin-bottom: 6px;
+}
+
+/* Footer */
+footer {
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #d0d8e8;
+  font-size: 0.9rem;
+  color: #222222;
+}
+
+/* Header */
+.header h1 {
+  font-size: 3rem;
+  color: #007acc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
   }
-  to {
-    transform: rotate(360deg);
+  .card {
+    padding: 15px;
+  }
+  .header h1 {
+    font-size: 2.2rem;
   }
 }
