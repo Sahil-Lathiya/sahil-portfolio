@@ -3,20 +3,10 @@ import React from 'react';
 function Header() {
   return (
     <header className="header">
-      <div
-        className="container"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
-          gap: '10px',
-          padding: '20px 0',
-        }}
-      >
+      <div className="container">
         <h1>Sahil Lathiya</h1>
         <p>Contact: (+91) 95860 01413 | Email: sahillathiya14@gmail.com</p>
-        <div className="social-links" style={{ display: 'flex', gap: '20px' }}>
+        <div className="social-links">
           <a
             href="https://www.linkedin.com/in/sahil-lathiya-8b4b95202/"
             target="_blank"

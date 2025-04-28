@@ -87,6 +87,16 @@ function Projects() {
             <span className="project-date">Jul 2023 - Nov 2023</span>
           </div>
           <p>
+            <a
+              href="https://stayvista-airbnb-clone.onrender.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#007acc", textDecoration: "underline" }}
+            >
+              stayvista-airbnb-clone.onrender.com
+            </a>
+          </p>
+          <p>
             <strong>Objective:</strong> Create a full-featured web application
             similar to Airbnb, allowing users to list, discover, and book rental
             properties with secure authentication and smooth UI.
@@ -142,16 +152,17 @@ function Projects() {
             MongoDB, Mongoose, EJS, Bootstrap, JavaScript, Passport.js, Git,
             GitHub, Render (deployment)
           </p>
-          <p>
-            <a
-              href="https://stayvista-airbnb-clone.onrender.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#007acc", textDecoration: "underline" }}
-            >
-              stayvista-airbnb-clone.onrender.com
-            </a>
-          </p>
+          
+          <div className="project-images">
+            {[...Array(10)].map((_, i) => (
+              <img
+                key={i}
+                src={`/wonderlust${i + 1}.png`}
+                alt={`Wonderlust project ${i + 1}`}
+                className={`project-image ${i % 3 === 0 ? "project-image-large" : ""}`}
+              />
+            ))}
+          </div>
         </motion.div>
 
         <motion.div
@@ -200,6 +211,16 @@ function Projects() {
             <strong>Tools/Technologies used:</strong> Android SDK and libraries,
             Java, Firebase, XML for UI design, Git for version control
           </p>
+          <div className="project-images">
+            {[...Array(8)].map((_, i) => (
+              <img
+                key={i}
+                src={`/ppsu${i + 1}.png`}
+                alt={`PPSU College App project ${i + 1}`}
+                className="project-image"
+              />
+            ))}
+          </div>
         </motion.div>
 
         <motion.div
@@ -248,6 +269,13 @@ function Projects() {
             <strong>Tools and Technologies Used:</strong> IoT Devices,
             Microcontrollers, C/C++, Networking
           </p>
+          <div className="project-images">
+            <img
+              src="/IOT Project.png"
+              alt="IOT-Based Car Parking System project"
+              className="project-image"
+            />
+          </div>
         </motion.div>
       </div>
     </section>
