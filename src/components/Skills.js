@@ -23,7 +23,7 @@ function Skills() {
         >
           <ul style={{ margin: "0" }}>
             <li style={{ marginBottom: "8px" }}>
-              <strong>Programming Languages:</strong> C, C++, Java, JavaScript
+              <strong>Programming Languages:</strong>  Python(Basic), C, C++, Java, JavaScript
             </li>
             <li style={{ marginBottom: "8px" }}>
               <strong>Web Technologies:</strong> React.js, Node.js, Express.js,
@@ -34,7 +34,7 @@ function Skills() {
               Database, MongoDB
             </li>
             <li style={{ marginBottom: "8px" }}>
-              <strong>Tools and Platforms:</strong> Android SDK, Git, GitHub
+              <strong>Tools and Platforms:</strong> Power BI, Excel, Android SDK, Git, GitHub
             </li>
             <li style={{ marginBottom: "8px" }}>
               <strong>Operating Systems:</strong> Windows, Kali Linux
