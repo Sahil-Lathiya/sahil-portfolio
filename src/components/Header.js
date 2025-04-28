@@ -5,7 +5,7 @@ function Header() {
     <header className="header">
       <div className="container">
         <h1>Sahil Lathiya</h1>
-        <p>Contact: (+91) 95860 01413 | Email: sahillathiya14@gmail.com</p>
+        <p>Contact: (+91) 95860 01413 | Email: sahillathiya9@gmail.com</p>
         <div className="social-links">
           <a
             href="https://www.linkedin.com/in/sahil-lathiya-8b4b95202/"
