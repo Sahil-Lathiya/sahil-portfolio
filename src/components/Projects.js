@@ -26,10 +26,22 @@ function Projects() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              flexDirection: "column",
+              alignItems: "flex-start",
             }}
           >
             <h3>Healthcare Data Analyst Project</h3>
-            <span className="project-date">April 2025</span>
+            <a
+              href="https://github.com/Sahil-Lathiya/Healthcare-Data-Analysis-Papollo"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", color: "#007acc", textDecoration: "none", fontWeight: "bold", marginTop: "4px", gap: "6px" }}
+              aria-label="GitHub Repository"
+            >
+              <i className="fab fa-github" style={{ fontSize: "20px" }}></i>
+              <span style={{ textTransform: "lowercase" }}>github</span>
+            </a>
+            <span className="project-date" style={{ alignSelf: "flex-end" }}>April 2025</span>
           </div>
           <p>
             <strong>Objective:</strong> To analyze healthcare data and create
@@ -65,6 +77,14 @@ function Projects() {
             <strong>Tools and Technologies Used:</strong> Power BI, Excel, Data
             Analysis, Visualization Techniques
           </p>
+          <div className="project-images">
+            <img
+              src="/healthcare.png"
+              alt="Healthcare Data Analyst Project"
+              className="project-image project-image-large"
+              style={{ width: "500px", height: "auto" }}
+            />
+          </div>
         </motion.div>
 
         <motion.div
@@ -86,14 +106,26 @@ function Projects() {
             </h3>
             <span className="project-date">Jul 2023 - Nov 2023</span>
           </div>
-          <p>
+          <p style={{ display: "flex", gap: "16px", marginBottom: "8px" }}>
             <a
               href="https://stayvista-airbnb-clone.onrender.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#007acc", textDecoration: "underline" }}
+              style={{ display: "inline-flex", alignItems: "center", color: "#007acc", textDecoration: "none", fontWeight: "bold", gap: "6px" }}
+              aria-label="Deployed Project"
             >
-              stayvista-airbnb-clone.onrender.com
+              <i className="fas fa-external-link-alt" style={{ fontSize: "16px" }}></i>
+              <span style={{ textTransform: "lowercase" }}>deployed project</span>
+            </a>
+            <a
+              href="https://github.com/Sahil-Lathiya/Wanderlust-Clone"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", color: "#007acc", textDecoration: "none", fontWeight: "bold", gap: "6px" }}
+              aria-label="GitHub Repository"
+            >
+              <i className="fab fa-github" style={{ fontSize: "20px" }}></i>
+              <span style={{ textTransform: "lowercase" }}>github</span>
             </a>
           </p>
           <p>
@@ -159,7 +191,8 @@ function Projects() {
                 key={i}
                 src={`/wonderlust${i + 1}.png`}
                 alt={`Wonderlust project ${i + 1}`}
-                className={`project-image ${i % 3 === 0 ? "project-image-large" : ""}`}
+                className="project-image project-image-large"
+                style={{ width: "500px", height: "auto" }}
               />
             ))}
           </div>
@@ -273,7 +306,8 @@ function Projects() {
             <img
               src="/IOT Project.png"
               alt="IOT-Based Car Parking System project"
-              className="project-image"
+              className="project-image project-image-large"
+              style={{ width: "500px", height: "auto" }}
             />
           </div>
         </motion.div>
