@@ -38,7 +38,7 @@ function Header() {
             LeetCode
           </a>
           <a
-            href="/Sahil Lathiya - Resume.pdf"
+            href="/Sahil_Lathiya_Uber.pdf"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: 'flex', alignItems: 'center', color: '#D44638', fontSize: '20px', textDecoration: 'none' }}
