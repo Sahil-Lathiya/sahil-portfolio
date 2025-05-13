@@ -14,7 +14,7 @@ function Projects() {
           PROJECT WORK DETAILS
         </motion.h2>
 
-        <motion.div
+        {/* <motion.div
           className="card"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -85,7 +85,7 @@ function Projects() {
               style={{ width: "500px", height: "auto" }}
             />
           </div>
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           className="card"
