@@ -7,8 +7,8 @@ function Contact() {
         <h2 className="section-title">Contact</h2>
         <div className="card" style={{textAlign : 'center'}}>
           <p>Email: sahillathiya9@gmail.com</p>
-          <p>Phone: (+91) 95860 01413</p>
-          <p>Address: Gujarat, India - 364265 </p>
+          <p>Phone: (+44) 7823914975 </p>
+          <p>Address: London, UK </p>
         </div>
       </div>
     </section>
