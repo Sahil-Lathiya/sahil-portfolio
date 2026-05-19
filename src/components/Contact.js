@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 
 function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -28,35 +27,13 @@ function Contact() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus('sending');
-
-    try {
-      /* ─────────────────────────────────────────────────────────────────
-         TO ACTIVATE THIS FORM:
-         1. Go to https://formspree.io and create a free account.
-         2. Create a new form and copy your endpoint URL.
-         3. Replace the URL below with your Formspree endpoint:
-            e.g. https://formspree.io/f/xyzabcde
-         ───────────────────────────────────────────────────────────────── */
-      const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
-
-      const res = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(form),
-      });
-
-      if (res.ok) {
-        setStatus('success');
-        setForm({ name: '', email: '', message: '' });
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      setStatus('error');
-    }
+    const subject = encodeURIComponent(`Portfolio Contact — ${form.name}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
+    );
+    window.location.href = `mailto:sahillathiya14@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -121,35 +98,16 @@ function Contact() {
             <button
               type="submit"
               className="btn btn-primary"
-              disabled={status === 'sending'}
               style={{ alignSelf: 'flex-start' }}
             >
-              {status === 'sending' ? (
-                <>
-                  <i className="fas fa-circle-notch fa-spin" aria-hidden="true"></i>
-                  Sending…
-                </>
-              ) : (
-                <>
-                  Send Message
-                  <i className="fas fa-paper-plane" aria-hidden="true"></i>
-                </>
-              )}
+              Send Message
+              <i className="fas fa-paper-plane" aria-hidden="true"></i>
             </button>
 
-            {status === 'success' && (
-              <p style={{ color: 'var(--accent)', fontSize: '0.88rem', marginTop: '4px' }}>
-                <i className="fas fa-check-circle" aria-hidden="true"></i> Message sent — I'll be in touch soon!
-              </p>
-            )}
-            {status === 'error' && (
-              <p style={{ color: '#f87171', fontSize: '0.88rem', marginTop: '4px' }}>
-                <i className="fas fa-exclamation-circle" aria-hidden="true"></i> Something went wrong. Email me directly at{' '}
-                <a href="mailto:sahillathiya14@gmail.com" style={{ color: 'inherit' }}>
-                  sahillathiya14@gmail.com
-                </a>
-              </p>
-            )}
+            <p style={{ color: 'var(--text-faint)', fontSize: '0.8rem', marginTop: '2px' }}>
+              <i className="fas fa-info-circle" aria-hidden="true"></i>{' '}
+              This will open your email client to send directly to Sahil.
+            </p>
           </form>
 
           {/* Contact info */}

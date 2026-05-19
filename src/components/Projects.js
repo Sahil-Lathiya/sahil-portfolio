@@ -86,6 +86,7 @@ const STANDARD = [
     title: 'PPSU College Mobile App',
     date: 'Jan 2024 – May 2024',
     carousel: PPSU_IMGS,
+    carouselContain: true,
     imageAlt: 'PPSU College App screenshots showing various screens',
     github: null,
     live: null,
@@ -216,9 +217,16 @@ function StandardCard({ p }) {
   return (
     <div className={`project-card${p.reverse ? ' reverse' : ''} fade-up`}>
       {/* Image / Carousel side */}
-      <div className="project-image-side">
+      <div
+        className="project-image-side"
+        style={p.carouselContain ? { aspectRatio: 'unset', height: '420px' } : {}}
+      >
         {p.carousel ? (
-          <Carousel images={p.carousel} alt={p.imageAlt} />
+          <Carousel
+            images={p.carousel}
+            alt={p.imageAlt}
+            objectFit={p.carouselContain ? 'contain' : 'cover'}
+          />
         ) : (
           <img
             src={p.image}

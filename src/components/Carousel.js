@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-function Carousel({ images, alt }) {
+function Carousel({ images, alt, objectFit = 'cover' }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
@@ -42,11 +42,13 @@ function Carousel({ images, alt }) {
               key={i}
               aria-label={`Slide ${i + 1} of ${images.length}`}
               aria-hidden={i !== current}
+              style={objectFit === 'contain' ? { background: '#0d0d14' } : {}}
             >
               <img
                 src={src}
                 alt={`${alt} screenshot ${i + 1}`}
                 loading={i === 0 ? 'eager' : 'lazy'}
+                style={{ objectFit }}
               />
             </div>
           ))}
