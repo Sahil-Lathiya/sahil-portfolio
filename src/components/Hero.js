@@ -1,8 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+/* ─── Typewriter config ─── */
+const PHRASES = [
+  'building XGBoost recommenders with SHAP explainability',
+  'training ResNet50 for pneumonia detection — 95.6% accuracy',
+  'deploying full-stack ML platforms on live cloud infrastructure',
+];
+const TYPING_SPEED  = 50;   // ms per character typed
+const DELETE_SPEED  = 24;   // ms per character deleted
+const PAUSE_FULL    = 2200; // ms to pause when phrase is complete
+const PAUSE_EMPTY   = 380;  // ms to pause before typing next phrase
 
 function Hero({ darkMode }) {
-  const canvasRef = useRef(null);
+  const canvasRef  = useRef(null);
+  const [displayed, setDisplayed] = useState('');
+  const typeRef    = useRef({ phraseIdx: 0, charIdx: 0, deleting: false });
 
+  /* ─── Canvas particle animation ─── */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -10,7 +24,7 @@ function Hero({ darkMode }) {
     let animId;
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth;
+      canvas.width  = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
     };
     resize();
@@ -18,11 +32,11 @@ function Hero({ darkMode }) {
 
     const count = Math.min(55, Math.floor((canvas.width * canvas.height) / 18000));
     const particles = Array.from({ length: count }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
+      x:  Math.random() * canvas.width,
+      y:  Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 0.28,
       vy: (Math.random() - 0.5) * 0.28,
-      r: Math.random() * 1.5 + 0.8,
+      r:  Math.random() * 1.5 + 0.8,
     }));
 
     const LINK_DIST = 130;
@@ -34,9 +48,8 @@ function Hero({ darkMode }) {
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${accentRgb}, 0.35)`;
@@ -45,16 +58,15 @@ function Hero({ darkMode }) {
 
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
+          const dx   = particles[i].x - particles[j].x;
+          const dy   = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < LINK_DIST) {
-            const alpha = 0.12 * (1 - dist / LINK_DIST);
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${accentRgb}, ${alpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `rgba(${accentRgb}, ${0.12 * (1 - dist / LINK_DIST)})`;
+            ctx.lineWidth   = 0.8;
             ctx.stroke();
           }
         }
@@ -64,19 +76,55 @@ function Hero({ darkMode }) {
     };
 
     draw();
-
     return () => {
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animId);
     };
   }, [darkMode]);
 
+  /* ─── Typewriter loop — self-scheduling, mounts once ─── */
+  useEffect(() => {
+    let id;
+
+    function tick() {
+      const t      = typeRef.current;
+      const phrase = PHRASES[t.phraseIdx];
+
+      if (!t.deleting) {
+        if (t.charIdx < phrase.length) {
+          t.charIdx++;
+          setDisplayed(phrase.slice(0, t.charIdx));
+          return TYPING_SPEED;
+        }
+        t.deleting = true;
+        return PAUSE_FULL;
+      } else {
+        if (t.charIdx > 0) {
+          t.charIdx--;
+          setDisplayed(phrase.slice(0, t.charIdx));
+          return DELETE_SPEED;
+        }
+        t.phraseIdx = (t.phraseIdx + 1) % PHRASES.length;
+        t.deleting  = false;
+        return PAUSE_EMPTY;
+      }
+    }
+
+    function schedule() {
+      const delay = tick();
+      id = setTimeout(schedule, delay);
+    }
+
+    id = setTimeout(schedule, PAUSE_EMPTY);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
     <section className="hero" id="hero">
       <canvas ref={canvasRef} className="hero-canvas" aria-hidden="true" />
 
       <div className="hero-inner">
-        {/* Left — content */}
+        {/* ── Left — content ── */}
         <div className="hero-content">
           <div className="hero-badge">
             <span className="hero-badge-dot" aria-hidden="true"></span>
@@ -90,9 +138,15 @@ function Hero({ darkMode }) {
 
           <p className="hero-desc">
             MSc Data Analytics student at Ravensbourne University London.
-            I ship production ML — from explainable recommenders on live cloud
-            infrastructure to deep learning models for clinical imaging.
-            Clean code, real data, honest outcomes.
+            I ship production ML —{' '}
+            <span
+              className="hero-typed"
+              aria-live="polite"
+              aria-label={`Currently: ${displayed}`}
+            >
+              {displayed}
+              <span className="typewriter-cursor" aria-hidden="true" />
+            </span>
           </p>
 
           <div className="hero-actions">
@@ -101,7 +155,7 @@ function Hero({ darkMode }) {
               <i className="fas fa-arrow-right" aria-hidden="true"></i>
             </a>
             <a
-              href="/Sahil Lathiya - Resume.pdf"
+              href="/Sahil%20Lathiya%20-%20Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-ghost"
@@ -142,7 +196,7 @@ function Hero({ darkMode }) {
           </div>
         </div>
 
-        {/* Right — avatar */}
+        {/* ── Right — avatar ── */}
         <div className="hero-visual">
           <div className="hero-avatar">
             <img

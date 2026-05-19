@@ -494,9 +494,10 @@ body {
 .hero-avatar {
   width: 280px;
   height: 280px;
-  border-radius: 28px;
+  border-radius: 50%;
   background: var(--surface);
-  border: 1.5px solid var(--border);
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 6px var(--accent-glow), var(--shadow);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -504,7 +505,6 @@ body {
   font-size: 5rem;
   font-weight: 700;
   color: var(--accent);
-  box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -521,7 +521,29 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 28px;
+  border-radius: 50%;
+}
+
+/* ─── Typewriter ─── */
+.hero-typed {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
 /* ═══════════════ ABOUT ═══════════════ */
@@ -638,13 +660,9 @@ body {
   gap: 8px;
 }
 
-.skill-group-name::before {
-  content: '';
-  width: 14px;
-  height: 1.5px;
-  background: var(--accent);
-  display: inline-block;
-  border-radius: 2px;
+.skill-group-name i {
+  width: 16px;
+  text-align: center;
 }
 
 .skill-tags {
@@ -1268,9 +1286,9 @@ body {
   }
 
   .hero-avatar {
-    width: 200px;
-    height: 200px;
-    font-size: 3.5rem;
+    width: 180px;
+    height: 180px;
+    font-size: 3rem;
   }
 
   .featured-top {

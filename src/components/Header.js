@@ -52,7 +52,7 @@ function Header({ darkMode, toggleDark, activeSection }) {
           {/* Actions */}
           <div className="nav-actions">
             <a
-              href="/Sahil Lathiya - Resume.pdf"
+              href="/Sahil%20Lathiya%20-%20Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-cv"
@@ -111,7 +111,7 @@ function Header({ darkMode, toggleDark, activeSection }) {
 
         <div className="mobile-menu-footer">
           <a
-            href="/Sahil Lathiya - Resume.pdf"
+            href="/Sahil%20Lathiya%20-%20Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"

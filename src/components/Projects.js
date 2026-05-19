@@ -41,6 +41,7 @@ const STANDARD = [
     title: 'Pneumonia Detection AI',
     date: 'MSc Project · 2024 – 2025',
     carousel: PNEUMONIA_IMGS,
+    carouselContain: true,
     imageAlt: 'Pneumonia detection model results and Grad-CAM visualisation',
     github: 'https://github.com/Sahil-Lathiya/pneumonia_prediction',
     live: null,
