@@ -3,6 +3,7 @@ import Carousel from './Carousel';
 
 /* ─── Project data ─── */
 const XAI_IMGS = Array.from({ length: 10 }, (_, i) => `/xai-screenshot${i + 1}.png`);
+const PNEUMONIA_IMGS = Array.from({ length: 6 }, (_, i) => `/pneumonia${i + 1}.png`);
 const WANDERLUST_IMGS = Array.from({ length: 10 }, (_, i) => `/wonderlust${i + 1}.png`);
 const PPSU_IMGS = Array.from({ length: 8 }, (_, i) => `/ppsu${i + 1}.png`);
 
@@ -39,7 +40,7 @@ const STANDARD = [
     num: '02',
     title: 'Pneumonia Detection AI',
     date: 'MSc Project · 2024 – 2025',
-    image: '/healthcare.png',
+    carousel: PNEUMONIA_IMGS,
     imageAlt: 'Pneumonia detection model results and Grad-CAM visualisation',
     github: 'https://github.com/Sahil-Lathiya/pneumonia_prediction',
     live: null,
