@@ -1,14 +1,230 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const targets = el.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    targets.forEach((t) => observer.observe(t));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    try {
+      /* ─────────────────────────────────────────────────────────────────
+         TO ACTIVATE THIS FORM:
+         1. Go to https://formspree.io and create a free account.
+         2. Create a new form and copy your endpoint URL.
+         3. Replace the URL below with your Formspree endpoint:
+            e.g. https://formspree.io/f/xyzabcde
+         ───────────────────────────────────────────────────────────────── */
+      const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
   return (
-    <section className="contact">
+    <section className="contact section" id="contact" ref={sectionRef}>
       <div className="container">
-        <h2 className="section-title">Contact</h2>
-        <div className="card" style={{textAlign : 'center'}}>
-          <p>Email: sahillathiya14@gmail.com</p>
-          <p>Phone: (+44) 7823914975 </p>
-          <p>Address: London, UK </p>
+        <p className="section-eyebrow fade-up">Get in Touch</p>
+        <h2 className="section-title fade-up fade-up-d1">Let's Talk</h2>
+        <p className="section-sub fade-up fade-up-d2">
+          Open to London-based roles in AI/ML engineering, data analytics, and
+          full-stack development. I reply within 24 hours.
+        </p>
+
+        <div className="contact-grid">
+          {/* Form */}
+          <form
+            className="contact-form fade-up fade-up-d3"
+            onSubmit={handleSubmit}
+            noValidate
+          >
+            <div className="form-group">
+              <label className="form-label" htmlFor="contact-name">Name</label>
+              <input
+                id="contact-name"
+                className="form-input"
+                type="text"
+                name="name"
+                placeholder="Your name"
+                value={form.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="contact-email">Email</label>
+              <input
+                id="contact-email"
+                className="form-input"
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="contact-message">Message</label>
+              <textarea
+                id="contact-message"
+                className="form-input"
+                name="message"
+                placeholder="Tell me about the role or project..."
+                rows={5}
+                value={form.message}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={status === 'sending'}
+              style={{ alignSelf: 'flex-start' }}
+            >
+              {status === 'sending' ? (
+                <>
+                  <i className="fas fa-circle-notch fa-spin" aria-hidden="true"></i>
+                  Sending…
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <i className="fas fa-paper-plane" aria-hidden="true"></i>
+                </>
+              )}
+            </button>
+
+            {status === 'success' && (
+              <p style={{ color: 'var(--accent)', fontSize: '0.88rem', marginTop: '4px' }}>
+                <i className="fas fa-check-circle" aria-hidden="true"></i> Message sent — I'll be in touch soon!
+              </p>
+            )}
+            {status === 'error' && (
+              <p style={{ color: '#f87171', fontSize: '0.88rem', marginTop: '4px' }}>
+                <i className="fas fa-exclamation-circle" aria-hidden="true"></i> Something went wrong. Email me directly at{' '}
+                <a href="mailto:sahillathiya14@gmail.com" style={{ color: 'inherit' }}>
+                  sahillathiya14@gmail.com
+                </a>
+              </p>
+            )}
+          </form>
+
+          {/* Contact info */}
+          <div className="contact-info fade-up fade-up-d4">
+            <div>
+              <p className="contact-info-heading">Direct contact</p>
+              <p className="contact-info-sub">
+                Prefer email? Reach me directly — I check it every day.
+              </p>
+            </div>
+
+            <div className="contact-items">
+              <a
+                href="mailto:sahillathiya14@gmail.com"
+                className="contact-item"
+                aria-label="Email Sahil"
+              >
+                <div className="contact-item-icon">
+                  <i className="fas fa-envelope" aria-hidden="true"></i>
+                </div>
+                sahillathiya14@gmail.com
+              </a>
+
+              <a
+                href="tel:+447823914975"
+                className="contact-item"
+                aria-label="Call Sahil"
+              >
+                <div className="contact-item-icon">
+                  <i className="fas fa-phone" aria-hidden="true"></i>
+                </div>
+                (+44) 7823 914 975
+              </a>
+
+              <span className="contact-item" style={{ cursor: 'default' }}>
+                <div className="contact-item-icon">
+                  <i className="fas fa-location-dot" aria-hidden="true"></i>
+                </div>
+                London, United Kingdom
+              </span>
+            </div>
+
+            <div>
+              <p className="form-label" style={{ marginBottom: '12px' }}>Find me online</p>
+              <div className="contact-socials">
+                <a
+                  href="https://github.com/Sahil-Lathiya"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-social"
+                  aria-label="GitHub"
+                >
+                  <i className="fab fa-github" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/sahil-lathiya-8b4b95202/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-social"
+                  aria-label="LinkedIn"
+                >
+                  <i className="fab fa-linkedin-in" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="https://leetcode.com/u/SD123lathiya/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-social"
+                  aria-label="LeetCode"
+                >
+                  <i className="fas fa-code" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

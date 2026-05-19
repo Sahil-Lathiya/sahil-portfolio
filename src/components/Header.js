@@ -1,55 +1,132 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-function Header() {
+const NAV_LINKS = [
+  { href: '#about',     label: 'About' },
+  { href: '#skills',    label: 'Skills' },
+  { href: '#projects',  label: 'Projects' },
+  { href: '#education', label: 'Education' },
+  { href: '#contact',   label: 'Contact' },
+];
+
+function Header({ darkMode, toggleDark, activeSection }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
+  const closeMenu = () => setMobileOpen(false);
+
   return (
-    <header className="header">
-      <div className="container">
-        <h1>Sahil Lathiya</h1>
-        <p>Contact: (+44) 7823914975 | Email: sahillathiya14@gmail.com</p>
-        <div className="social-links">
-          <a
-            href="https://www.linkedin.com/in/sahil-lathiya-8b4b95202/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'flex', alignItems: 'center', color: '#0A66C2', fontSize: '20px', textDecoration: 'none' }}
-            aria-label="LinkedIn"
-          >
-            <i className="fab fa-linkedin" style={{ fontSize: '24px', marginRight: '8px' }}></i>
-            LinkedIn
+    <>
+      <nav className={`nav${scrolled ? ' scrolled' : ''}`} role="navigation" aria-label="Main navigation">
+        <div className="nav-inner">
+          {/* Logo */}
+          <a href="#hero" className="nav-logo" aria-label="Sahil Lathiya — home">
+            <span className="nav-logo-text">SL</span>
           </a>
+
+          {/* Desktop links */}
+          <ul className="nav-links">
+            {NAV_LINKS.map(({ href, label }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  className={`nav-link${activeSection === href.slice(1) ? ' active' : ''}`}
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {/* Actions */}
+          <div className="nav-actions">
+            <a
+              href="/Sahil Lathiya - Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-cv"
+              download
+            >
+              <i className="fas fa-download" aria-hidden="true"></i>
+              Download CV
+            </a>
+
+            <button
+              className="theme-toggle"
+              onClick={toggleDark}
+              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} aria-hidden="true"></i>
+            </button>
+
+            <button
+              className={`hamburger${mobileOpen ? ' open' : ''}`}
+              onClick={() => setMobileOpen((o) => !o)}
+              aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+            >
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile overlay */}
+      <div
+        className={`mobile-overlay${mobileOpen ? ' open' : ''}`}
+        onClick={closeMenu}
+        aria-hidden="true"
+      />
+
+      {/* Mobile slide-in menu */}
+      <div
+        className={`mobile-menu${mobileOpen ? ' open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+      >
+        {NAV_LINKS.map(({ href, label }) => (
           <a
-            href="https://github.com/Sahil-Lathiya"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'flex', alignItems: 'center', color: '#333', fontSize: '20px', textDecoration: 'none' }}
-            aria-label="GitHub"
+            key={href}
+            href={href}
+            className={`mobile-nav-link${activeSection === href.slice(1) ? ' active' : ''}`}
+            onClick={closeMenu}
           >
-            <i className="fab fa-github" style={{ fontSize: '24px', marginRight: '8px' }}></i>
-            GitHub
+            {label}
           </a>
-          <a
-            href="https://leetcode.com/u/SD123lathiya/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'flex', alignItems: 'center', color: '#FFA116', fontSize: '20px', textDecoration: 'none' }}
-            aria-label="LeetCode"
-          >
-            <i className="fas fa-code" style={{ fontSize: '24px', marginRight: '8px' }}></i>
-            LeetCode
-          </a>
+        ))}
+
+        <div className="mobile-menu-footer">
           <a
             href="/Sahil Lathiya - Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'flex', alignItems: 'center', color: '#D44638', fontSize: '20px', textDecoration: 'none' }}
-            aria-label="Resume"
+            className="btn btn-primary"
+            download
+            onClick={closeMenu}
           >
-            <i className="fas fa-file-pdf" style={{ fontSize: '24px', marginRight: '8px' }}></i>
-            Resume
+            <i className="fas fa-download" aria-hidden="true"></i>
+            Download CV
           </a>
+          <button className="theme-toggle" onClick={toggleDark} aria-label="Toggle theme">
+            <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} aria-hidden="true"></i>
+          </button>
         </div>
       </div>
-    </header>
+    </>
   );
 }
 
